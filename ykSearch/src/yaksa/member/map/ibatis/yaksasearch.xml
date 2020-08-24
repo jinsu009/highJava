@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap namespace="yaksasearch">
+	
+	<!-- search, insert, delete, update, getall -->
+
+	
+	<!-- 테이블에 지역에 맞는 검색된 약국들의 정보를 불러오기  -->
+	<select id="searchYK" resultClass="PharmVO2"  parameterClass="map">
+		select pharm_name, pharm_tel, pharm_add1, pharm_add2, Pharm_opentime,Pharm_closetime,Pharm_starrate
+		from pharmacy
+		where $pharm_add$ like '%' || #add# || '%' 
+	</select>	
+	
+	<!--  -->
+	<select id="pharmNM" resultClass="PharmVO2">
+		select pharm_name
+		from pharmacy
+	</select>
+	
+
+	</sqlMap>
+	

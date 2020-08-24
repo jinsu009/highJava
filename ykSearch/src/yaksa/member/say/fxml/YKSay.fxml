@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="418.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="yaksa.member.say.main.ContSay">
+   <children>
+      <Label fx:id="LBSay" alignment="CENTER" layoutX="45.0" layoutY="21.0" prefHeight="106.0" prefWidth="314.0" style="-fx-background-color: skyblue;" text="명언" />
+      <Label fx:id="LBCelebrity" alignment="CENTER" contentDisplay="TOP" layoutX="209.0" layoutY="140.0" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: skyblue;" text="말한사람" />
+      <Button fx:id="PreBtn" layoutX="25.0" layoutY="194.0" mnemonicParsing="false" onAction="#PrevPage" style="-fx-background-color: skyblue;" text="Prev" />
+      <Button fx:id="NextBtn" layoutX="351.0" layoutY="194.0" mnemonicParsing="false" onAction="#NextPage" style="-fx-background-color: skyblue;" text="Next" />
+   </children>
+</Pane>

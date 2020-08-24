@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap namespace="mymember">
+	
+		<select id="getAllMemberCount" resultClass="int"> <!-- 전체 레코드 수  -->
+			select count(*) from mymember
+		</select>
+		
+		<select id="getPagingMemberList" resultClass="memVO" parameterClass = "map">
+			select * from(
+    						select A.*, rownum as RNUM
+      			  from (select * from mymember order by mem_id) A
+       		 				where rownum &lt;= #end# )
+			where RNUM &gt; #start#
+		
+		</select>
+	
+		<select id="getAllMember" resultClass ="memVO">
+			select * from mymember
+		</select>
+		
+		<insert id="insertmember" parameterClass = "memVO">
+			insert into mymember (mem_id, mem_name, mem_tel, mem_addr)
+		 	values (#mem_id#,#mem_name#,#mem_tel#,#mem_addr#)
+		</insert>
+		
+		<update id="updatemember" parameterClass = "memVO">
+			update mymember set mem_name = #mem_name# , mem_tel = #mem_tel# , mem_addr = #mem_addr# 
+			where mem_id = #mem_id#
+			<!-- memVO안의 변수명이 mem_id와 같기 때문에 똑같은 걸 적어줌 -->
+		</update>
+		
+		<!-- parameterClass 를 map로 설정했을 경우에는 그 Map의 key값이 vo의 변수명처럼 사용하면 된다.  -->
+		<update id="updatemember2" parameterClass = "map">
+		<!-- map에 있는 정보를 사용하기 위해서는 key를 가져오면 된다.
+			 field: 변경할 컬럼명 
+			 
+			 # : 오라클에서 '' 로 표기 된다. 
+			 $ : 오라클에서 문자그대로 인식해준다.
+			 
+			 - 파라미터로 가져온 값을 컬럼명에 사용할 경우에는 $을 사용한다.
+			 예) $변수명$ 또는 $키 값$
+			 -->
+			update mymember set $field$ = #data# where mem_id = #memId# 
+		</update>
+		
+		
+		<delete id="deletemember" parameterClass ="String">
+			delete from mymember where mem_id = #mem_id#
+			<!-- #안의 변수는 달라도되지만 보기 쉽도록 보통 같게 입력해준다. -->
+		</delete>
+		
+		<select id="searchmember" parameterClass = "map" resultClass = "memVO">
+			select * from mymember 
+			where $field$ like '%' || #search# || '%'
+		</select>
+		
+		<select id="countmember" parameterClass = "String" resultClass = "int">
+			select count(*) from mymember where mem_id = #mem_id#
+		</select>
+		 
+	</sqlMap>
+	

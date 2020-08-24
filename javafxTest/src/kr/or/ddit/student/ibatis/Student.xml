@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap namespace ="student">
+	
+		<insert id="insertstudent" parameterClass ="StuVO">
+		 	insert into student (std_name, std_kor, std_eng, std_mat)
+		 	values (#std_name#, #std_kor#, #std_eng#, #std_mat#)
+		</insert>
+		
+		<select id="getAllStudent" parameterClass ="map" resultClass ="StuVO">
+			select * from student
+		</select>
+		
+		<select id="countstudent" parameterClass="String" resultClass="int">
+			select count(*) from student where std_name = #std_name#
+		</select>
+		
+	</sqlMap>
+	
+	

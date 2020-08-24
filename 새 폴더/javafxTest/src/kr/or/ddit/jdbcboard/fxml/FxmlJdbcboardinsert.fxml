@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kr.or.ddit.jdbcboard.main.ContJdbcInsert">
+   <children>
+      <Label text="새 글 쓰 기">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="50.0" prefWidth="180.0">
+         <children>
+            <Label text="작성자 : ">
+               <HBox.margin>
+                  <Insets left="40.0" top="18.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="TextWriter" prefHeight="23.0" prefWidth="246.0">
+               <HBox.margin>
+                  <Insets bottom="10.0" top="18.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="180.0">
+         <children>
+            <Label text="제 목 : " />
+            <TextField fx:id="TextTitle" prefHeight="23.0" prefWidth="463.0">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="400.0" prefWidth="180.0">
+         <children>
+            <Label text="내 용 : " />
+            <TextArea fx:id="TextContent" prefHeight="500.0" prefWidth="464.0">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </TextArea>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="180.0">
+         <children>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveClicked" text="저장">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnCancle" mnemonicParsing="false" onAction="#CancleClicked" text="취소">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</VBox>

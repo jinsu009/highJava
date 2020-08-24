@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap namespace="yaksachart">
+	
+	<!--  약국의 통계를 위한 xml  -->
+	 <select id="getAllYK" resultClass="PharmVO3">
+	 	select pharm_id, pharm_name, pharm_chname from pharmacy where pharm_id like 'a002'
+	 </select>
+	
+	<!-- 해당약국에 방문했던 여성 회원 수-->
+	<select id="womancnt" resultClass="int">
+	 	select count(*) from pharmacy_prescription
+ 	 	where mem_id in (select mem_id from member where mem_regno2 like '2%') 
+	</select>
+	
+	<!-- 해당약국에 방문했던 남성 회원 수-->
+	<select id="mancnt" resultClass="int">
+	 	select count(*) from pharmacy_prescription
+ 	 	where mem_id in (select mem_id from member where mem_regno2 like '1%') 
+	</select>
+	
+	<!-- 해당약국에 방문했던 회원들의 연령별 카운트 10대 -->
+	<select id="onecnt" resultClass="int">
+		select count(*) as cnt
+		from pharmacy_prescription a , (
+		    select mem_id, 
+		    case when ('19'||substr(mem_regno1,0,2)) &gt; 1990 and ('19'||substr(mem_regno1,0,2)) &lt;= 2000
+		    then '20'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1980 and ('19'||substr(mem_regno1,0,2)) &lt;= 1990
+		    then '30'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1970 and ('19'||substr(mem_regno1,0,2)) &lt;= 1980
+		    then '40'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1960 and ('19'||substr(mem_regno1,0,2)) &lt;= 1970
+		    then '50'
+		    else '10'
+		    end as age
+		    from member
+		 ) b
+		 where a.mem_id=b.mem_id and b.age like '10'
+		 group by b.age
+	</select>
+	
+	<!-- 해당약국에 방문했던 회원들의 연령별 카운트 20대 -->
+	<select id="twocnt" resultClass="int">
+		select count(*) as cnt
+		from pharmacy_prescription a , (
+		    select mem_id, 
+		    case when ('19'||substr(mem_regno1,0,2)) &gt; 1990 and ('19'||substr(mem_regno1,0,2)) &lt;= 2000
+		    then '20'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1980 and ('19'||substr(mem_regno1,0,2)) &lt;= 1990
+		    then '30'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1970 and ('19'||substr(mem_regno1,0,2)) &lt;= 1980
+		    then '40'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1960 and ('19'||substr(mem_regno1,0,2)) &lt;= 1970
+		    then '50'
+		    else '10'
+		    end as age
+		    from member
+		 ) b
+		 where a.mem_id=b.mem_id and b.age like '20'
+		 group by b.age
+	</select>
+	
+	<!-- 해당약국에 방문했던 회원들의 연령별 카운트 30대 -->
+	<select id="thrcnt" resultClass="int">
+		select count(*) as cnt
+		from pharmacy_prescription a , (
+		    select mem_id, 
+		    case when ('19'||substr(mem_regno1,0,2)) &gt; 1990 and ('19'||substr(mem_regno1,0,2)) &lt;= 2000
+		    then '20'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1980 and ('19'||substr(mem_regno1,0,2)) &lt;= 1990
+		    then '30'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1970 and ('19'||substr(mem_regno1,0,2)) &lt;= 1980
+		    then '40'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1960 and ('19'||substr(mem_regno1,0,2)) &lt;= 1970
+		    then '50'
+		    else '10'
+		    end as age
+		    from member
+		 ) b
+		 where a.mem_id=b.mem_id and b.age like '30'
+		 group by b.age
+	</select>
+	
+	<!-- 해당약국에 방문했던 회원들의 연령별 카운트 40대 -->
+	<select id="fourcnt" resultClass="int">
+		select count(*) as cnt
+		from pharmacy_prescription a , (
+		    select mem_id, 
+		    case when ('19'||substr(mem_regno1,0,2)) &gt; 1990 and ('19'||substr(mem_regno1,0,2)) &lt;= 2000
+		    then '20'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1980 and ('19'||substr(mem_regno1,0,2)) &lt;= 1990
+		    then '30'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1970 and ('19'||substr(mem_regno1,0,2)) &lt;= 1980
+		    then '40'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1960 and ('19'||substr(mem_regno1,0,2)) &lt;= 1970
+		    then '50'
+		    else '10'
+		    end as age
+		    from member
+		 ) b
+		 where a.mem_id=b.mem_id and b.age like '40'
+		 group by b.age
+	</select>
+	
+	<!-- 해당약국에 방문했던 회원들의 연령별 카운트 50대 -->
+	<select id="fivecnt" resultClass="int">
+		select count(*) as cnt
+		from pharmacy_prescription a , (
+		    select mem_id, 
+		    case when ('19'||substr(mem_regno1,0,2)) &gt; 1990 and ('19'||substr(mem_regno1,0,2)) &lt;= 2000
+		    then '20'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1980 and ('19'||substr(mem_regno1,0,2)) &lt;= 1990
+		    then '30'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1970 and ('19'||substr(mem_regno1,0,2)) &lt;= 1980
+		    then '40'
+		    when ('19'||substr(mem_regno1,0,2)) &gt; 1960 and ('19'||substr(mem_regno1,0,2)) &lt;= 1970
+		    then '50'
+		    else '10'
+		    end as age
+		    from member
+		 ) b
+		 where a.mem_id=b.mem_id and b.age like '50'
+		 group by b.age
+	</select>
+	
+
+	</sqlMap>
+	

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" style="-fx-background-radius: 150;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="300.0">
+         <children>
+            <AnchorPane prefHeight="250.0" prefWidth="300.0" style="-fx-background-radius: 150 150 0 0; -fx-background-color: #b0e9f7;">
+               <children>
+                  <ImageView fitHeight="56.0" fitWidth="80.0" layoutX="122.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/cbbtn.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="125.0" prefHeight="35.0" prefWidth="138.0" text="전송되었습니다." textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="112.0" layoutY="152.0" prefHeight="35.0" prefWidth="85.0" text="Thank you." textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 0 0 150 150; -fx-background-color: white;">
+               <children>
+                  <Button fx:id="btnOk" layoutX="89.0" layoutY="57.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="122.0" style="-fx-background-color: #b0e9f7; -fx-background-radius: 50;" styleClass="button" stylesheets="@../css/alert_re.css" text="확인" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

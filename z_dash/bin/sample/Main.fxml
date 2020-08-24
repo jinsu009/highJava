@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane fx:id="outerBoarderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="430.0" prefWidth="260.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane>
+               <children>
+                  <ImageView fitHeight="230.0" fitWidth="230.0" layoutX="16.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/yaksa2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutY="130.0" prefHeight="61.0" prefWidth="262.0" style="-fx-background-color: #a7dcfc;">
+               <children>
+                  <Label layoutX="42.0" layoutY="10.0" text="Main Page" textFill="WHITE">
+                     <font>
+                        <Font name="Microsoft Sans Serif" size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+               <effect>
+                  <InnerShadow color="WHITE" />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="32.0" />
+               </VBox.margin>
+            </Pane>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="약국찾기" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/medicine.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="WHITE" />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="처방전 보기" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/prescription.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="WHITE" />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="처방 영수증" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/receipt.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="WHITE" />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="262.0" styleClass="button1" stylesheets="@../css/fullpackstyling.css" text="약 검색" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/drug-icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <effect>
+                  <InnerShadow color="WHITE" />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Button>
+            <TextArea prefHeight="104.0" prefWidth="262.0" style="-fx-background-color: #e3e3e3; -fx-text-fill: grey;" text="&#10;TEL 055-1234-1234&#10;E-MAIL hello1234@naver.com&#10;대전광역시 중구 선화동 영민빌딩 202호&#10;&#10;Copyright © YAKSA Corp. All rights reserved.">
+               <font>
+                  <Font size="10.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </TextArea>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <BorderPane fx:id="innerBoardPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <Pane prefHeight="126.0" prefWidth="820.0" style="-fx-background-color: #73bbff;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="377.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/mail.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="436.0" layoutY="26.0" text="김우경님 환영합니다 :)" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="594.0" layoutY="21.0" mnemonicParsing="false" style="-fx-background-color: #73bbff;" text="마이페이지" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="683.0" layoutY="21.0" mnemonicParsing="false" style="-fx-background-color: #73bbff;" text="로그아웃" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="774.0" layoutY="24.0" mnemonicParsing="false" style="-fx-background-color: white;" text="X">
+                     <effect>
+                        <InnerShadow color="#d3d3d3" />
+                     </effect>
+                  </Button>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #73bbff;" BorderPane.alignment="CENTER">
+               <children>
+                  <Button contentDisplay="CENTER" layoutX="46.0" mnemonicParsing="false" opacity="0.85" prefHeight="269.0" prefWidth="346.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button contentDisplay="CENTER" layoutX="424.0" mnemonicParsing="false" opacity="0.85" prefHeight="269.0" prefWidth="346.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button contentDisplay="CENTER" layoutX="424.0" layoutY="300.0" mnemonicParsing="false" opacity="0.85" prefHeight="183.0" prefWidth="346.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Button contentDisplay="CENTER" layoutX="46.0" layoutY="300.0" mnemonicParsing="false" opacity="0.85" prefHeight="183.0" prefWidth="346.0" styleClass="button2" stylesheets="@../css/fullpackstyling.css" />
+                  <Label layoutX="191.0" layoutY="274.0" text="Calendar" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="569.0" layoutY="274.0" text="Schedule" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="206.0" layoutY="488.0" text="Map" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="577.0" layoutY="488.0" text="YakSa" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

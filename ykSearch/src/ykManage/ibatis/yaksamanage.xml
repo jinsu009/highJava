@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap namespace="yaksamanage">
+	
+	<!-- search, insert, delete, update, getall -->
+	
+	<!-- 약국 회원정보를 불러오는 쿼리문  -->
+	 <select id="lookYaksa" resultClass="PharmVO">
+<!-- 	 	select * from pharmacy where where pharm_id = #pharm_id# -->
+	 select pharm_id,  pharm_chname,  pharm_name, pharm_pw,  pharm_regno1, pharm_regno2,
+    pharm_email1, pharm_email2,  pharm_license_num, pharm_corpor_num, pharm_zip_code, pharm_add1,
+    pharm_add2, pharm_tel, pharm_starrate    
+     from pharmacy where pharm_id = 'a002'
+	 </select>
+	
+	<!-- 약국 회원 정보 수정   -->
+	<update id="updateYK" parameterClass="PharmVO">
+		update pharmacy 
+		set 
+			pharm_chname =#pharm_chname#, pharm_pw = #pharm_pw#, 
+			pharm_email1 =#pharm_email1#, pharm_email2 = #pharm_email2#, pharm_tel = #pharm_tel#,
+		where pharm_id = 'a002'		
+	</update>
+	
+	<!-- 약국 회원 정보 수정 - zipcode, add1, add2   -->
+	<update id="updateZipYK" parameterClass="PharmVO">
+		update pharmacy 
+		set pharm_zip_code=#pharm_zip_code#, pharm_add1 =#pharm_add1#, pharm_add2 =#pharm_add2#
+		where pharm_id = 'a002'		
+	</update>
+	
+	<!-- 약국 시간 정보 수정   -->
+	<update id="updateYKTime" parameterClass="map">
+		update pharmacy 
+		set $day_open$ = #opentime# , $day_close$ = #closetime#
+		where pharm_id = 'a002'	
+	</update>
+	
+	<!-- 약국 회원 탈퇴  -->
+	<delete id="deleteYK" parameterClass="string">
+		delete from pharmacy where pharm_pw = #pharm_pw#
+	</delete>
+
+
+	</sqlMap>
+	

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap namespace="jdbcboard">
+	
+	<!-- search, insert, delete, update, getall -->
+	
+	<!-- 테이블에 게시글 정보 나타내기  -->
+	<select id="getallBoardTable" resultClass="JdbcVO">
+		select board_no, board_title, board_writer, to_char(board_date, 'YYYY-MM-DD') board_date, board_content, board_cnt
+		from jdbc_board
+		order by board_no desc
+	</select>
+	
+	<!-- search : 게시글 검색 , key = 작성자 , 제목, 내용-->
+	<select id="searchBoard" parameterClass="map" resultClass="JdbcVO">
+		select board_no, board_writer, to_char(board_date, 'YYYY-MM-DD'), board_title, board_content, board_cnt
+		from jdbc_board
+		where $combox$ like '%$textfield$%'
+	</select>
+	
+	<!-- look : 내가 선택한 게시글의 내용을 볼수 있도록 하는 쿼리문  -->
+	 <select id="lookBoard" parameterClass="int" resultClass="JdbcVO">
+	 	select board_title, board_no, board_title, board_writer, board_content, 
+	 			to_char(board_date, 'YYYY-MM-DD') board_date, board_cnt
+	 	 from jdbc_board where board_no = #board_no#
+	 </select>
+	
+	<!-- 새로운 게시글내용 입력 -->
+	<insert id="insertBoard" parameterClass="JdbcVO">
+	 	insert into jdbc_board (board_no, board_title, board_writer, board_content, board_date, board_cnt)
+	 	values (seq_board.nextVal, #board_title#,#board_writer#,#board_content#,sysdate, 0)
+	</insert>
+	
+	<!-- 게시글 내용 수정  -->
+	<update id="updateBoard" parameterClass="JdbcVO">
+		update jdbc_board set board_title =#board_title#, board_content = #board_content#, board_date = sysdate
+		where board_no = #board_no#		
+	</update>
+	
+	<!-- 게시글 내용 삭제  -->
+	<delete id="deleteBoard" parameterClass="int">
+		delete from jdbc_board where board_no = #board_no#
+	</delete>
+	
+	</sqlMap>
+	

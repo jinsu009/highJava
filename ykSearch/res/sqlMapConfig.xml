@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+   PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+   "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+   <!-- 
+   		대소문자 비교 확실히
+		DB와 연결하는 정보를 properties파일에 설정해 놓고 이 properties파일의 내용을 읽어와 설정한다. 
+    -->
+   <properties resource="dbinfo.properties"/>
+   
+   <!-- ibatis가 실행될 때 필요한 여러가지 옵션 설정 -->
+   <!-- 일반적인 값의 크기의 순서 : maxRequests(기본값 512) >= maxSessions(기본값 128) >= maxTransactions(기본값 32) -->
+   
+   <settings cacheModelsEnabled="true" enhancementEnabled="true"
+         lazyLoadingEnabled="true" maxRequests="32"
+         maxSessions="10" maxTransactions="5" useStatementNamespaces="true"/>
+         
+   <!--
+		VO객체를 사용할 때 해당 객체의 이름을 지정해 주어야 하는데 이때 전체 패키지명까지 모두 기술해야한다. 
+		그렇게 되면 전체 이름의 길이가 너무 길어지는데 이 긴 이름을 대신해서 사용할 이름을 설정한다. 
+		형식)) <typeAlias alias = "alias명" type="VO클래스의 전체이름/>
+	-->
+<typeAlias alias = "PharmVO" type="yaksa.chemist.manage.vo.PharmVO"/>
+<typeAlias alias = "PharmVO2" type="yaksa.member.map.vo.PharmVO"/>
+<typeAlias alias = "PharmVO3" type="yaksa.chemist.chart.vo.PharmVO"/>
+<typeAlias alias = "PharmPres" type="yaksa.chemist.chart.vo.PharmPresVO"/> 
+<typeAlias alias = "Svo" type="yaksa.member.say.vo.SayVO"/> 
+
+<!-- 환자가 방문한 약국 통계 -->
+<typeAlias alias = "PharmPres2" type="yaksa.chemist.chart.vo.PharmPresVO"/> 
+
+    <!-- DB와 연동하기 : 위에서 읽어온 properties파일의 내용으로 설정함 -->
+    <transactionManager type="JDBC">
+       <dataSource type="SIMPLE">
+          <property name="JDBC.Driver" value="${driver}"/>
+          <property name="JDBC.ConnectionURL" value="${url}"/>
+          <property name="JDBC.Username" value="${user}"/>
+          <property name="JDBC.Password" value="${pass}"/>
+       </dataSource>
+    </transactionManager>      
+    
+     <!-- 
+	   	처리할 SQL문은 따로 xml문서로 작성한 후 다음과 같은 형식으로 등록해준다. 
+	   	형식)) <sqlMap resource="경로명/파일명.xml"/>
+	 -->
+	 
+    <!-- <sqlMap resource="basic/lprodTest.xml"/> -->
+   
+   <!-- . 이 들어가면 안된다. => / 로 교체 -->
+<sqlMap resource="yaksa/chemist/manage/ibatis/yaksamanage.xml"/>
+<sqlMap resource="yaksa/member/map/ibatis/yaksasearch.xml"/>
+<sqlMap resource="yaksa/chemist/chart/ibatis/yaksachart.xml"/>
+<sqlMap resource="yaksa/member/say/ibatis/yaksay.xml"/>
+</sqlMapConfig>
+
+
+
+
+

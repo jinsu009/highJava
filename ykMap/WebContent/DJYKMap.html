@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>데이터베이스에서 약국검색하기</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffaee214f231f75cd5f81dd1e7383230&libraries=services"></script>
+   	<script src = " https://online.tableau.com/javascripts/api/tableauwdc-1.1.0.js"type = "text / javascript"> </ script> 
+    <script></script>
+</head>
+<body>
+<div>
+	<select name="search" id="search" style="float:left; margin: 10px 10px;">
+		<option value="pharm_name">약국이름</option>
+		<option value="pharm_tel">전화번호</option>
+	</select>
+	<input id="input" type="text" style="float:left; margin: 10px 10px;">
+</div>
+<!-- fxml에서 webview를 띄울 때  -->
+<button onclick="sendToJava();" id="submit" style="float:left; margin: 10px 10px;">전송</button> 
+
+<!-- html에서 사용할 때  -->
+<!-- <button id="submit" style="float:left; margin: 10px 10px;">jsp 전송</button> -->
+
+<div id="result"></div>
+<div id="map" style="width:100%;height:500px;"></div>
+<script>
+// javaapp와 javascript연동
+function sendToJava () {
+  var s = document.getElementById('input').value;
+  var d = document.getElementById('search').value;
+  javaConnector.toLowerCase(s,d);
+};
+
+
+function getJsConnector() {
+    return getJsConnector;
+};
+//==================
+
+	//버튼 클릭했을 때 jsp로 넘기기위한 
+	$("#submit").click(function(){
+			$(function() {
+				
+				//========= ajax
+				var storename = "";
+				var stradd = ""; 
+				$.ajax({
+					url:"http://localhost/ykMap/DJYKMapSearch.jsp",
+					datatype:"json",
+					type:"get",
+					data:
+						"field=" + $("#search").val()
+						+ "&str=" +  $("#input").val()
+				})
+				.done(function(data){
+					data = JSON.parse(data.trim());
+					storename += data[0].pharm_name;
+					stradd += data[0].pharm_add1;
+					stradd += data[0].pharm_add2;
+// 					alert(data) // object 출력 
+// 					alert("1"+data[0].pharm_name)
+// 					alert("2"+data[0].pharm_add1 + "," + data[0].pharm_add2)
+// 					alert("3"+storename)// 가게 
+// 					alert("4"+stradd)// 주소
+// 					alert(data.length)
+					
+					$.each(data, function(i){
+						test(data)
+					});
+				})
+				.fail(function(){
+					alert("실패");
+				});
+		
+// 				var testData = [
+// 					{
+// 						"addr": "대전광역시 서구 관저로 27 102호 (관저동)",
+// 					    "name": "365스마일약국"
+// 					},
+// 					{
+// 						"addr": "대전광역시 유성구 신성로72번길 66 1층 (신성동)",
+// 					    "name": "하연약국"
+// 					},
+// 					{
+// 						"addr": "대전광역시 서구 한밭대로 745 지하2층 (둔산동)",
+// 					    "name": "보리약국"
+// 					},
+// 					{
+// 						"addr": "대전광역시 유성구 반석로 100 (반석동) 반석로100",
+// 					    "name": "탄동농협하나로마트분사"
+// 					},
+// 					{
+// 						"addr": "대전광역시 유성구 죽동로297번길 76 (죽동)",
+// 					    "name": "소망약국"
+// 					}
+// 				];
+// 				test(testData); // testData를 function test로 전송  
+				
+				
+		}); // button이 없을 때 function()끝나는 부분 
+}); // onclick function
+
+function test(data){
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        //center: new kakao.maps.LatLng(data.storeInfos[0].lat, data.storeInfos[0].lng), // 지도의 중심좌표
+        level: 7 // 지도의 확대 레벨
+    };  
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	
+//		var coords = new Array();
+//		cords.push(new kakao.maps.LatLng(result[i].y, result[i].x));
+
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	for(var i=0; i<data.length; i++){
+		(function(i){
+			// 주소로 좌표를 검색합니다
+// 			geocoder.addressSearch(data[i], function(result, status) {
+			geocoder.addressSearch(data[i].pharm_add1 + data[i].pharm_add2, function(result, status) {
+			   // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+			
+						//var coords = new kakao.maps.LatLng(data.storeInfos[i].lat, data.storeInfos[i].lng);
+						var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						
+				        // 결과값으로 받은 위치를 마커로 표시합니다
+				        var marker = new kakao.maps.Marker({
+				            map: map,
+				            position: coords
+				        });
+					
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+// 				            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ data[i].name +'</div>'
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ data[i].pharm_name +'</div>'
+				        });
+				        infowindow.open(map, marker);
+				
+				    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				    	map.setCenter(coords);
+			     }
+			});
+		})(i);
+	}
+
+}
+
+
+
+//========================================================
+/*
+
+	$(function(){
+			
+			$.ajax({
+				url:"https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/stores/json?page=1",
+				type:"get",
+				datatype:"json"
+			})
+			.done(function(data){
+				
+				console.log(data.storeInfos[0].addr);
+				console.log(data.storeInfos[0].name);
+				console.log(data.storeInfos[0].lat);  // 위도 y
+				console.log(data.storeInfos[0].lng);  // 경도 x
+				
+// 				var addr = new Array();
+// 				var name = new Array();
+				
+// 				$.each(addr,function(i){
+// 					$.each(name,function(i){
+// 						addr.push(data.storeInfos[i].addr);
+// 						name.push(data.storeInfos[i].name);
+			
+	// 				var lat = data.storeInfos[0].lat;
+	// 				var lng = data.storeInfos[0].lng;
+						
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				    mapOption = {
+// 				        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				        center: new kakao.maps.LatLng(data.storeInfos[0].lat, data.storeInfos[0].lng), // 지도의 중심좌표
+				        level: 3 // 지도의 확대 레벨
+				    };  
+	
+					var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+					
+// 					var coords = new Array();
+// 					cords.push(new kakao.maps.LatLng(result[i].y, result[i].x));
+					
+					for(var i=0; i<data.storeInfos.length; i++){
+					
+						var coords = new kakao.maps.LatLng(data.storeInfos[i].lat, data.storeInfos[i].lng);
+						
+				        // 결과값으로 받은 위치를 마커로 표시합니다
+				        var marker = new kakao.maps.Marker({
+				            map: map,
+				            position: coords
+				        });
+				
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+data.storeInfos[i].name+'</div>'
+	//				            content: '<div style="width:150px;text-align:center;padding:6px 0;">약국</div>'
+				        });
+				        infowindow.open(map, marker);
+				
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        	map.setCenter(coords);
+					}
+			        
+			        
+			        //=========================================
+			        
+			        
+					
+					/*
+					
+					
+					// 주소-좌표 변환 객체를 생성합니다
+					var geocoder = new kakao.maps.services.Geocoder();
+					
+					
+					// 주소로 좌표를 검색합니다
+					geocoder.addressSearch(addr[i], function(result, status) {
+// 						geocoder.addressSearch(name, function(result, status) {
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+					
+	// 				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+							var coords = new Array();
+							cords.push(new kakao.maps.LatLng(result[i].y, result[i].x));
+							
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+					
+					        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+name[i]+'</div>'
+// 					            content: '<div style="width:150px;text-align:center;padding:6px 0;">약국</div>'
+					        });
+					        infowindow.open(map, marker);
+					
+					        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+					        map.setCenter(coords[i]);
+					     }
+// 					    }) 
+// 				})
+// 			})
+================
+		//})
+	})
+});
+*/
+
+</script>
+
+</body>
+</html>

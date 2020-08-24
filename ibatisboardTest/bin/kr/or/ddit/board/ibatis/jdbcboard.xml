@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	<sqlMap namespace="jdbcboard">
+	
+		<!-- 새로운 게시글 등록 -->
+		<insert id="insertboard" parameterClass="jboardVO">
+		 	insert into jdbc_board (board_no, board_title, board_writer, board_content, board_date , board_cnt) 
+			 values(seq_board.nextval, #board_title#, #board_writer#, #board_content# ,sysdate ,0)
+		</insert>
+		
+		<!-- 보고자하는 게시글을 선택해서 출력해주는 쿼리문 -->
+		 <select id="lookboard" parameterClass="int" resultClass="jboardVO">
+		 	select board_title, board_no, board_title, board_writer, board_content, 
+		 			to_char(board_date, 'YYYY-MM-DD') board_date, board_cnt
+		 	 from jdbc_board where board_no = #board_no#
+		 </select>
+
+		 <!-- 선택한 게시글이 있는지 없는지 확인하는 쿼리문 -->
+		<select id="countboard" parameterClass ="int" resultClass ="int">
+		 	select count(*) from jdbc_board where board_no = #board_no#
+		 </select>
+		 
+		 <!-- 게시글을 확인했을때 조회수가 올라가도록 하는 쿼리문 -->
+		 <update id="updatecount" parameterClass="int">
+		 	update jdbc_board set board_cnt = (board_cnt+1) where board_no =#board_no#
+		 </update>
+		 
+		 <!-- 제목을 입력하여 게시글을 검색하는 쿼리문  -->
+		<!-- <select id="searchboard" parameterClass="jboardVO" resultClass="jboardVO">  --> 
+		<select id="searchboard" parameterClass="string" resultClass="jboardVO">
+		 	select board_title, board_no, board_title, board_writer, board_content, 
+		 			to_char(board_date, 'YYYY-MM-DD') board_date, board_cnt 
+		 	from jdbc_board where board_title like '%' || #board_title# || '%'
+		 	order by board_no desc
+		 </select>
+		 
+		 <!-- 게시글 번호를 입력받은 상태에서 게시글의 제목과 내용 그리고 수정날짜를 업데이트 하는 쿼리문 -->
+		 <update id="editboard" parameterClass = "jboardVO">
+		 	update jdbc_board set board_title=#board_title#, board_content=#board_content#, board_date = sysdate
+		 	where board_no = #board_no#
+		 </update>
+		 
+		 <!-- 게시글 번호를 입력받은 상태에서 게시글 삭제를 하는 쿼리문 -->
+		 <delete id= "deleteboard" parameterClass = "int">
+		 	delete from jdbc_board where board_no =#board_no#		 
+		 </delete>
+		 
+		 <!-- 모든 게시글을 보여주는 쿼리문.   조건(where절 )이 없으면 parameterclass가 필요가 없다. 
+		 select에서는 반드시 resultclass값이작성되어야 한다. -->
+		<select id="selectAllboard" resultClass="jboardVO">
+		 	select board_title, board_no, board_title, board_writer, board_content, 
+		 		to_char(board_date, 'YYYY-MM-DD') board_date, board_cnt 
+		 	from jdbc_board
+		 	order by board_no desc
+		 </select>
+		 
+	</sqlMap>
+	

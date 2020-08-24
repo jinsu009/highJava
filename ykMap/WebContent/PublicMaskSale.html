@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>공적마스크</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ffaee214f231f75cd5f81dd1e7383230&libraries=services"></script>
+   	<script src = " https://online.tableau.com/javascripts/api/tableauwdc-1.1.0.js"type = "text / javascript"> </ script> 
+    <script src="json2.js"></script>
+    
+    
+</head>
+<body>
+<div>
+	<input id="input" type="text" placeholder="ㅇㅇ광역시ㅇㅇ구" style="float:left; margin: 10px 10px;">
+</div>
+
+<!-- html에서 사용할 때  -->
+<button id="submit" style="float:left; margin: 10px 10px;">검색</button>
+
+<div id="result"></div>
+<div id="map" style="width:100%;height:500px;"></div>
+<script>
+	//버튼 클릭했을 때 jsp로 넘기기위한 
+	$("#submit").click(function(){
+			$(function() {
+				//========= ajax
+				
+				$.ajax({
+					url:"https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address=" + $("#input").val(),
+					datatype:"json",
+					type:"get"
+					
+				})
+				.done(function(data){
+					$("#map").empty();
+// 					alert(data.stores[0].addr)
+					test(data)
+					
+				})
+				.fail(function(){
+					alert("실패");
+				});
+				
+		}); // button이 없을 때 function()끝나는 부분 
+}); // onclick function
+
+function test(data){
+	
+// 	alert("data " + data.stores[0].addr)
+// 	alert("data.stores[0].lng" + data.stores[0].lng)
+// 	alert("data.stores[0].lat" + data.stores[0].lat)
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+//         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(data.stores[0].lat,data.stores[0].lng), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	
+//		var coords = new Array();
+//		cords.push(new kakao.maps.LatLng(result[i].y, result[i].x));
+
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	for(var i=0; i<data.stores.length; i++){
+		(function(i){
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch(data.stores[i].addr, function(result, status) {
+// 			geocoder.addressSearch(data[i].pharm_add1 + data[i].pharm_add2, function(result, status) {
+			   // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+			
+						//var coords = new kakao.maps.LatLng(data.storeInfos[i].lat, data.storeInfos[i].lng);
+						var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						
+				        // 결과값으로 받은 위치를 마커로 표시합니다
+				        var marker = new kakao.maps.Marker({
+				            map: map,
+				            position: coords
+				        });
+					
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ data.stores[i].name + "<br>" +mask(data.stores[i].remain_stat) + '</div>'
+// 				            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ data[i].pharm_name +'</div>'
+				        });
+				        
+				        infowindow.open(map);
+				        
+				    	 // 마커에 마우스오버 이벤트를 등록합니다
+				        kakao.maps.event.addListener(marker, 'click', function() {
+				          // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+				            infowindow.open(map, marker);
+				        });
+
+				        // 마커에 마우스아웃 이벤트를 등록합니다
+				        kakao.maps.event.addListener(marker, 'mouseout', function() {
+				            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+				            infowindow.close();
+				        });
+				        
+				
+				    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				    	map.setCenter(coords);
+			     }
+			});
+		})(i);
+	}
+
+}
+	
+	
+	function mask(data){
+		
+		var mask = ""
+
+		if(data == "plenty"){
+			mask = "마스크 100개 이상"
+			return mask;
+		
+		}
+		if(data== "some"){
+				mask = "마스크 30개 이상"
+				return mask;
+		}
+		if(data == "few"){
+				mask = "마스크 30개 미만"
+				return mask;
+		
+		}
+		if(data == "empty"){
+				mask = "마스크 1개 이하"
+				return mask;
+			}
+		if(data == "break"){
+				 mask = "판매중지"
+				return mask;
+			}
+	
+		
+		
+	}
+
+	
+	
+	
+
+
+</script>
+
+</body>
+</html>
